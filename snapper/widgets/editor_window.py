@@ -62,7 +62,7 @@ class EditorWindow(QMainWindow):
         self._update_preview_timer.timeout.connect(
             lambda: self._update_image_preview(preset)
         )
-        self._update_preview_timer.start(500)
+        self._update_preview_timer.start(250)
 
     def _update_image_preview(self, preset):
         updated_image = (

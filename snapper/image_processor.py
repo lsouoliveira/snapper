@@ -1,5 +1,4 @@
-from types import new_class
-from wand.image import Image
+from wand.image import Image, COMPOSITE_OPERATORS
 from wand.drawing import Drawing
 from wand.color import Color
 
@@ -77,7 +76,7 @@ class ImageProcessor:
         image_layer.composite_channel(
             "default_channels",
             mask,
-            "copy_opacity",
+            self._copy_alpha_operator(),
             0,
             0,
         )
@@ -112,5 +111,11 @@ class ImageProcessor:
             draw(mask)
 
         return mask
+
+    def _copy_alpha_operator(self):
+        if "copy_opacity" in COMPOSITE_OPERATORS:
+            return "copy_opacity"
+        
+        return "copy_alpha"
 
 
