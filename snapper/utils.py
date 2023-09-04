@@ -1,6 +1,7 @@
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QBuffer
 from wand.image import Image
+import time
 
 from .image_processor import ImageProcessor
 
@@ -19,6 +20,8 @@ def build_image_processor_from_pixmap(pixmap):
 
 def build_pixmap_from_wand_image(image):
     pixmap = QPixmap()
-    pixmap.loadFromData(image.make_blob("png"))
+    blob = image.make_blob("png")
+
+    pixmap.loadFromData(blob)
 
     return pixmap

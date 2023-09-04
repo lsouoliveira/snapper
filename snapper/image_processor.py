@@ -13,7 +13,7 @@ class ImageProcessor:
         self.source_img = source_img
         self._padding = 0
         self._border_radius = 0
-        self._background = Background.create(color="black")
+        self._background = Background.create(color="transparent")
         
     def with_padding(self, padding: int):
         self._padding = padding
@@ -41,23 +41,19 @@ class ImageProcessor:
     def _draw_background(self, image):
         bg_image = self._generate_background_image()
 
-        with Drawing() as draw:
-            draw.composite(
-                "multiply",
-                0,
-                0,
-                image.width,
-                image.height,
-                bg_image,
-            )
-
-            draw(image)
+        image.composite_channel(
+            "default_channels",
+            bg_image,
+            "over",
+            0,
+            0,
+        )
 
     def _generate_background_image(self):
         if isinstance(self._background, GradientBackground):
             image = Image(
-                width=self.source_img.width,
-                height=self.source_img.height,
+                width=self.source_img.height,
+                height=self.source_img.width,
                 pseudo=f"gradient:{self._background.color}-{self._background.second_color}",
             )
 

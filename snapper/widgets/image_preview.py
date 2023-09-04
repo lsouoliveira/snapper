@@ -45,3 +45,7 @@ class ImagePreview(QWidget):
 
     def _handle_image_preview_double_clicked(self):
         self.doubleClicked.emit()
+
+    @property
+    def image(self):
+        return self._image_preview.pixmap()

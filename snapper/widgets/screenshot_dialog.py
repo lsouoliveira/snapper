@@ -1,5 +1,4 @@
-import dataclasses
-from PyQt5.QtWidgets import QDialog, QWidget
+from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QShortcut
 from PyQt5.QtGui import QPainter
@@ -25,14 +24,13 @@ class ScreenshotDialog(QDialog):
 
         self.setWindowTitle("Screenshot Widget")
         self.setMinimumSize(800, 600)
-
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.setStyleSheet("background: Transparent;")
         self._selected_region = Region(0, 0, 0, 0)
 
-        # self._quitShortcut = QShortcut(QKeySequence("Esc"), self)
-        # self._quitShortcut.activated.connect(self.close)
-
-        # Transparent background that cant be clicked through
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self._quitShortcut = QShortcut(QKeySequence("Esc"), self)
+        self._quitShortcut.activated.connect(self.close)
 
     def paintEvent(self, _):
         # draw filled background with opacity

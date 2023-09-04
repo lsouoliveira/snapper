@@ -9,12 +9,10 @@ class App(QApplication):
     def __init__(self):
         super().__init__([])
 
-        # self._screenshot_dialog = ScreenshotDialog()
-        # self._screenshot_dialog.regionChanged.connect(self.region_changed)
-        #
-        # self._screenshot_dialog.show()
-        self.editor_window = EditorWindow(None)
-        self.editor_window.show()
+        self._screenshot_dialog = ScreenshotDialog()
+        self._screenshot_dialog.regionChanged.connect(self.region_changed)
+        
+        self._screenshot_dialog.showFullScreen()
 
     @QtCore.pyqtSlot(Region)
     def region_changed(self, region):
@@ -22,7 +20,7 @@ class App(QApplication):
 
         pixmap = self._take_screenshot(region)
 
-        if pixmap.isNull():
+        if pixmap is None or pixmap.isNull():
             return
 
         try:

@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import (
-    QGridLayout,
     QWidget,
     QVBoxLayout,
     QLabel,
@@ -8,9 +7,6 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSignal as PyqtSignal
-
-from dataclasses import dataclass
-from enum import Enum
 
 from ..models.preset_model import PresetDTO, PresetModel
 from ..data.preset import Background, GradientBackground
@@ -94,7 +90,7 @@ class Preset(QWidget):
         self._padding_slider.setMinimum(0)
         self._padding_slider.setMaximum(256)
         self._padding_slider.setValue(self._model.preset.padding)
-        self._padding_slider.valueChanged.connect(self._update_preset)
+        self._padding_slider.sliderReleased.connect(self._update_preset)
 
         borderRadiusLabel = QLabel("Border Radius")
         borderRadiusLabel.setStyleSheet("font-size: 16px;")
@@ -103,7 +99,7 @@ class Preset(QWidget):
         self._border_radius_slider.setMinimum(0)
         self._border_radius_slider.setMaximum(512)
         self._border_radius_slider.setValue(self._model.preset.padding)
-        self._border_radius_slider.valueChanged.connect(self._update_preset)
+        self._border_radius_slider.sliderReleased.connect(self._update_preset)
 
         backgroundLabel = QLabel("Background")
         backgroundLabel.setStyleSheet("font-size: 16px;")
