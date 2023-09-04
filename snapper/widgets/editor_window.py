@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtCore import pyqtSignal as PyqtSignal
 
 from .image_preview import ImagePreview
 from .preset import Preset 
@@ -8,6 +9,7 @@ from ..utils import build_image_processor_from_pixmap, build_pixmap_from_wand_im
 
 class EditorWindow(QMainWindow):
     _image_preview: ImagePreview
+    exited = PyqtSignal()
 
     def __init__(self, pixmap, parent=None):
         super().__init__(parent)
@@ -49,11 +51,10 @@ class EditorWindow(QMainWindow):
 
     def _handle_image_preview_double_clicked(self):
         self.copy_to_clipboard()
-        self.close()
+        self.exited.emit()
 
     def copy_to_clipboard(self):
         QApplication.clipboard().setPixmap(self._image_preview.image)
-
 
     def _handle_preset_changed(self, preset):
         self._update_image_preview(preset)
@@ -70,3 +71,8 @@ class EditorWindow(QMainWindow):
         pixmap = build_pixmap_from_wand_image(updated_image)
 
         self._image_preview.update_image(pixmap)
+
+    def closeEvent(self, event):
+        super().closeEvent(event)
+        self.exited.emit()
+

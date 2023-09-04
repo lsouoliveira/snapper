@@ -59,6 +59,11 @@ BACKGROUND_OPTIONS = [
         color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #3494e6, stop: 1 #ec6ead)",
     ),
     lambda: BackgroundOption(
+        background=GradientBackground.create(color="#2193b0", second_color="#6dd5ed"),
+        name="Cool Blues",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #2193b0, stop: 1 #6dd5ed)",
+    ),
+    lambda: BackgroundOption(
         background=GradientBackground.create(color="#67B26F", second_color="#4ca2cd"),
         name="Mild",
         color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #67B26F, stop: 1 #4ca2cd)",
@@ -178,7 +183,7 @@ class Preset(QWidget):
                 row.addStretch()
 
         if len(BACKGROUND_OPTIONS) > max_columns:
-            num_items_to_add = round(len(BACKGROUND_OPTIONS) / max_columns)
+            num_items_to_add = int(len(BACKGROUND_OPTIONS) / max_columns)
         else:
             num_items_to_add = max_columns - len(BACKGROUND_OPTIONS)
 

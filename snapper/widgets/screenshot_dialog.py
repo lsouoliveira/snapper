@@ -30,7 +30,7 @@ class ScreenshotDialog(QDialog):
         self._selected_region = Region(0, 0, 0, 0)
 
         self._quitShortcut = QShortcut(QKeySequence("Esc"), self)
-        self._quitShortcut.activated.connect(self.close)
+        self._quitShortcut.activated.connect(self.reject)
 
     def paintEvent(self, _):
         # draw filled background with opacity
