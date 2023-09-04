@@ -92,17 +92,18 @@ class ImageProcessor:
             0,
         )
 
-        shadow = self.source_img.clone() 
-        shadow.background_color = Color("black")
-        shadow.shadow(20, self._shadow, 0, 0)
+        if self._shadow > 0:
+            shadow = self.source_img.clone() 
+            shadow.background_color = Color("black")
+            shadow.shadow(20, self._shadow, 0, 0)
 
-        image.composite_channel(
-            "default_channels",
-            shadow,
-            "over",
-            self._padding - 2 * self._shadow,
-            self._padding - self._shadow,
-        )
+            image.composite_channel(
+                "default_channels",
+                shadow,
+                "over",
+                self._padding - 2 * self._shadow,
+                self._padding - self._shadow,
+            )
 
         image.composite_channel(
             "default_channels",
