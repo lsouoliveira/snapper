@@ -31,7 +31,7 @@ class App(QApplication):
 
         self.editor_window = EditorWindow(pixmap)
         self.editor_window.exited.connect(lambda: self.quit())
-        raise Exception("queijo")
+        self.editor_window.showMaximized()
 
     def _take_screenshot(self, region):
         return self.primaryScreen().grabWindow(
