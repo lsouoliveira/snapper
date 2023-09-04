@@ -26,7 +26,8 @@ class App(QApplication):
         try:
             self.editor_window = EditorWindow(pixmap)
             self.editor_window.show()
-        except Exception as _:
+        except Exception as e:
+            print(e)
             return
 
 
@@ -39,5 +40,6 @@ class App(QApplication):
                 region.width,
                 region.height,
             )
-        except Exception as _:
+        except Exception as e:
+            print(e)
             return None

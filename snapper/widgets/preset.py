@@ -72,7 +72,7 @@ class Preset(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self._model = PresetModel()
+        self.model = PresetModel()
         self._selected_background = None
 
         self._setup_ui()
@@ -89,7 +89,7 @@ class Preset(QWidget):
         self._padding_slider = QSlider(Qt.Horizontal)
         self._padding_slider.setMinimum(0)
         self._padding_slider.setMaximum(256)
-        self._padding_slider.setValue(self._model.preset.padding)
+        self._padding_slider.setValue(self.model.preset.padding)
         self._padding_slider.sliderReleased.connect(self._update_preset)
 
         borderRadiusLabel = QLabel("Border Radius")
@@ -98,7 +98,7 @@ class Preset(QWidget):
         self._border_radius_slider = QSlider(Qt.Horizontal)
         self._border_radius_slider.setMinimum(0)
         self._border_radius_slider.setMaximum(512)
-        self._border_radius_slider.setValue(self._model.preset.padding)
+        self._border_radius_slider.setValue(self.model.preset.padding)
         self._border_radius_slider.sliderReleased.connect(self._update_preset)
 
         backgroundLabel = QLabel("Background")
@@ -162,15 +162,15 @@ class Preset(QWidget):
 
     def _update_preset(self):
         try:
-            self._model.update_preset(
+            self.model.update_preset(
                 PresetDTO(
                     padding=self._padding_slider.value(),
                     border_radius=self._border_radius_slider.value(),
-                    shadow=self._model.preset.shadow,
+                    shadow=self.model.preset.shadow,
                     background=self._selected_background
-                    or self._model.preset.background,
+                    or self.model.preset.background,
                 )
             )
-            self.preset_changed.emit(self._model.preset)
+            self.preset_changed.emit(self.model.preset)
         except ValueError:
             pass

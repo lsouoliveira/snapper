@@ -31,7 +31,7 @@ class ImageProcessor:
         return self
 
     def build(self):
-        new_image = Image(width=self.source_img.width, height=self.source_img.height)
+        new_image = Image(width=self.image_width, height=self.image_height)
 
         self._draw_background(new_image)
         self._draw_image(new_image)
@@ -49,11 +49,19 @@ class ImageProcessor:
             0,
         )
 
+    @property
+    def image_width(self):
+        return self.source_img.width + 2 * self._padding
+
+    @property
+    def image_height(self):
+        return self.source_img.height + 2 * self._padding
+
     def _generate_background_image(self):
         if isinstance(self._background, GradientBackground):
             image = Image(
-                width=self.source_img.height,
-                height=self.source_img.width,
+                width=self.image_height,
+                height=self.image_width,
                 pseudo=f"gradient:{self._background.color}-{self._background.second_color}",
             )
 
@@ -61,7 +69,7 @@ class ImageProcessor:
 
             return image
 
-        return Image(width=self.source_img.width, height=self.source_img.height, background=Color(self._background.color))
+        return Image(width=self.image_width, height=self.image_height, background=Color(self._background.color))
 
 
     def _draw_image(self, image):
@@ -75,11 +83,6 @@ class ImageProcessor:
             self._copy_alpha_operator(),
             0,
             0,
-        )
-
-        image_layer.resize(
-            width=image.width - 2 * self._padding,
-            height=image.height - 2 * self._padding,
         )
 
         image.composite_channel(

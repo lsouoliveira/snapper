@@ -1,5 +1,4 @@
 from PyQt5.QtCore import QObject, pyqtSignal
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSlider
 from dataclasses import dataclass
 
 from ..data.preset import NaturalNumber, Preset, Background, GradientBackground
@@ -20,10 +19,10 @@ class PresetModel(QObject):
         super().__init__()
 
         self._preset = Preset.create(
-            padding=NaturalNumber(0),
-            border_radius=NaturalNumber(0),
+            padding=NaturalNumber(96),
+            border_radius=NaturalNumber(32),
             shadow=NaturalNumber(0),
-            background=Background(color="#00000000")
+            background=GradientBackground.create(color="#3494e6", second_color="#ec6ead"),
         )
 
     @property

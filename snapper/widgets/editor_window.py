@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout
 
 from .image_preview import ImagePreview
-from .preset import Preset
+from .preset import Preset 
 from ..utils import build_image_processor_from_pixmap, build_pixmap_from_wand_image
 
 class EditorWindow(QMainWindow):
@@ -18,7 +18,7 @@ class EditorWindow(QMainWindow):
         self.setMinimumSize(800, 600)
         self._setup_ui()
 
-        self._image_preview.update_image(self._pixmap)
+        self._update_image_preview(self._preset.model.preset)
 
     def _setup_ui(self):
         central_widget = QWidget()
