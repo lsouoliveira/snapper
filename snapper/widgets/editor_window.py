@@ -65,6 +65,7 @@ class EditorWindow(QMainWindow):
             .with_border_radius(preset.border_radius)
             .with_background(preset.background)
             .with_shadow(preset.shadow)
+            .with_inset(preset.inset)
             .build()
         )
 

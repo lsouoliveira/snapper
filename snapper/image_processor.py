@@ -4,19 +4,31 @@ from wand.color import Color
 
 from .data.preset import Background, GradientBackground
 
+def image_to_pixels(image):
+    pixels = image.export_pixels()
+
+    return [tuple(pixels[i:i + 4]) for i in range(0, len(pixels), 4)]
+
+def color_from_tuple(t):
+    return Color("rgba({}, {}, {}, {})".format(*t))
+
 class ImageProcessor:
     _padding: int
     _border_radius: int
     _background: Background
     _shadow: int
+    _inset: int
 
     def __init__(self, source_img):
         self.source_img = source_img
         self._padding = 0
         self._border_radius = 0
         self._shadow = 0
+        self._inset = 0
         self._background = Background.create(color="transparent")
-        
+        self._pixels = image_to_pixels(self.source_img) 
+        self._edge_color = color_from_tuple(self.edge_color())
+
     def with_padding(self, padding: int):
         self._padding = padding
 
@@ -34,6 +46,11 @@ class ImageProcessor:
 
     def with_shadow(self, shadow: int):
         self._shadow = shadow
+
+        return self
+    
+    def with_inset(self, inset: int):
+        self._inset = inset
 
         return self
 
@@ -64,13 +81,26 @@ class ImageProcessor:
 
     @property
     def image_width(self):
-        return self.source_img.width + 2 * self._padding
+        return self.source_img.width + 2 * self._padding + 2 * self._inset
 
     @property
     def image_height(self):
         ratio = self.source_img.width / self.source_img.height
 
-        return self.source_img.height + int(2 * (self._padding / ratio))
+        return self.source_img.height + int(2 * (self._padding / ratio)) + 2 * self._inset
+    
+    def edge_color(self):
+        width = self.source_img.width
+        height = self.source_img.height
+
+        top_pixels = [self._pixels[i] for i in range(width)]
+        right_pixels = [self._pixels[i * width + width - 1] for i in range(height)]
+        left_pixels = [self._pixels[i * width] for i in range(height)]
+        bottom_pixels = [self._pixels[(height - 1 ) * width + i] for i in range(width)]
+
+        pixels = top_pixels + right_pixels + left_pixels + bottom_pixels
+
+        return max(set(pixels), key=pixels.count)
 
     def _generate_background_image(self):
         if isinstance(self._background, GradientBackground):
@@ -101,24 +131,49 @@ class ImageProcessor:
         )
 
         if self._shadow > 0:
-            shadow = self.source_img.clone() 
-            shadow.background_color = Color("black")
-            shadow.shadow(20, self._shadow, 0, 0)
+            with Drawing() as draw:
+                shadow = Image(width=self.source_img.width + 2 * self._inset, height=self.source_img.height + 2 * self._inset) 
+                shadow.background_color = Color("black")
 
-            image.composite_channel(
-                "default_channels",
-                shadow,
-                "over",
-                self._padding - 2 * self._shadow,
-                self.vertical_padding - self._shadow,
+                draw.fill_color = Color("black") 
+                draw.rectangle(
+                    left=0,
+                    top=0,
+                    width=shadow.width,
+                    height=shadow.height
+                )
+
+                draw(shadow)
+
+                shadow.shadow(20, self._shadow, 0, 0)
+
+                image.composite_channel(
+                    "default_channels",
+                    shadow,
+                    "over",
+                    self._padding - 2 * self._shadow,
+                    self.vertical_padding - self._shadow,
+                )
+
+        with Drawing() as draw:
+            draw.fill_color = self._edge_color 
+            draw.rectangle(
+                left=self._padding,
+                top=self.vertical_padding,
+                width=self.source_img.width + 2 * self._inset,
+                height=self.source_img.height + 2 * self._inset,
+                radius=self._border_radius if self._border_radius > 0 else None,
             )
+
+            draw(image)
+
 
         image.composite_channel(
             "default_channels",
             image_layer,
             "over",
-            self._padding,
-            self.vertical_padding,
+            self._padding + self._inset,
+            self.vertical_padding + self._inset,
         )
 
     def _create_radius_mask(self):
@@ -132,7 +187,7 @@ class ImageProcessor:
                 top=0,
                 width=self.source_img.width,
                 height=self.source_img.height,
-                radius=self._border_radius if self._border_radius > 0 else None,
+                radius=self._border_radius if self._border_radius > 0 and self._inset <= 0 else None,
             )
 
             draw(mask)

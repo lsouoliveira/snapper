@@ -52,6 +52,7 @@ class Preset:
     _border_radius: NaturalNumber
     _shadow: NaturalNumber
     _background: Background
+    _inset: NaturalNumber
 
     def __init__(
         self,
@@ -59,11 +60,13 @@ class Preset:
         border_radius: NaturalNumber,
         shadow: NaturalNumber,
         background: Background,
+        inset: NaturalNumber
     ):
         self._padding = padding
         self._border_radius = border_radius
         self._shadow = shadow
         self._background = background
+        self._inset = inset
 
     @property
     def padding(self) -> int:
@@ -81,16 +84,22 @@ class Preset:
     def background(self) -> Background:
         return self._background
 
+    @property
+    def inset(self) -> int:
+        return self._inset.value
+
     @staticmethod
     def create(
         padding: NaturalNumber,
         border_radius: NaturalNumber,
         shadow: NaturalNumber,
         background: Background,
+        inset: NaturalNumber
     ) -> "Preset":
         return Preset(
             padding=padding,
             border_radius=border_radius,
             shadow=shadow,
             background=background,
+            inset=inset
         )

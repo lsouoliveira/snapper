@@ -157,6 +157,15 @@ class Preset(QWidget):
         self._shadow_slider.setValue(self.model.preset.shadow)
         self._shadow_slider.sliderReleased.connect(self._update_preset)
 
+        insetLabel = QLabel("Inset")
+        insetLabel.setStyleSheet("font-size: 16px;")
+
+        self._inset_slider = QSlider(Qt.Horizontal)
+        self._inset_slider.setMinimum(0)
+        self._inset_slider.setMaximum(100)
+        self._inset_slider.setValue(self.model.preset.inset)
+        self._inset_slider.sliderReleased.connect(self._update_preset)
+
         current_row = 0
         max_columns = 5
         row = QHBoxLayout()
@@ -202,6 +211,8 @@ class Preset(QWidget):
         layout.addWidget(self._border_radius_slider)
         layout.addWidget(shadowLabel)
         layout.addWidget(self._shadow_slider)
+        layout.addWidget(insetLabel)
+        layout.addWidget(self._inset_slider)
         layout.addWidget(backgroundLabel)
         layout.addWidget(backgroundGrid)
 
@@ -218,6 +229,7 @@ class Preset(QWidget):
                     shadow=self._shadow_slider.value(),
                     background=self._selected_background
                     or self.model.preset.background,
+                    inset=self._inset_slider.value()
                 )
             )
             self.preset_changed.emit(self.model.preset)

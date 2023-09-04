@@ -35,7 +35,7 @@ class App(QApplication):
             self.editor_window.showMaximized()
         except Exception as e:
             print(e)
-            return
+            self.quit()
 
     def _take_screenshot(self, region):
         try:
@@ -48,4 +48,4 @@ class App(QApplication):
             )
         except Exception as e:
             print(e)
-            return None
+            self.quit()

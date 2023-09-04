@@ -10,6 +10,7 @@ class PresetDTO:
     border_radius: int
     shadow: int
     background: Background
+    inset: int
 
 
 class PresetModel(QObject):
@@ -23,6 +24,7 @@ class PresetModel(QObject):
             border_radius=NaturalNumber(32),
             shadow=NaturalNumber(10),
             background=GradientBackground.create(color="#3494e6", second_color="#ec6ead"),
+            inset=NaturalNumber(48)
         )
 
     @property
@@ -35,6 +37,7 @@ class PresetModel(QObject):
             border_radius=NaturalNumber(preset.border_radius),
             shadow=NaturalNumber(preset.shadow),
             background=preset.background,
+            inset=NaturalNumber(preset.inset)
         )
         self.preset_changed.emit(self.map_preset_to_preset_dto(self._preset))
 
@@ -45,4 +48,5 @@ class PresetModel(QObject):
             border_radius=preset.border_radius,
             shadow=preset.shadow,
             background=preset.background,
+            inset=preset.inset
         )
