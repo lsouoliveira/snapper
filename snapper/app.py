@@ -25,7 +25,7 @@ class App(QApplication):
 
         try:
             self.editor_window = EditorWindow(pixmap)
-            self.editor_window.show()
+            self.editor_window.showMaximized()
         except Exception as e:
             print(e)
             return
