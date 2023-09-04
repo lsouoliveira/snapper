@@ -55,6 +55,7 @@ class EditorWindow(QMainWindow):
             self._image_processor.with_padding(preset.padding)
             .with_border_radius(preset.border_radius)
             .with_background(preset.background)
+            .with_shadow(preset.shadow)
             .build()
         )
 

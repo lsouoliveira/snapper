@@ -21,7 +21,7 @@ class PresetModel(QObject):
         self._preset = Preset.create(
             padding=NaturalNumber(96),
             border_radius=NaturalNumber(32),
-            shadow=NaturalNumber(0),
+            shadow=NaturalNumber(10),
             background=GradientBackground.create(color="#3494e6", second_color="#ec6ead"),
         )
 

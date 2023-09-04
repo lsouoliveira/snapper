@@ -8,11 +8,13 @@ class ImageProcessor:
     _padding: int
     _border_radius: int
     _background: Background
+    _shadow: int
 
     def __init__(self, source_img):
         self.source_img = source_img
         self._padding = 0
         self._border_radius = 0
+        self._shadow = 0
         self._background = Background.create(color="transparent")
         
     def with_padding(self, padding: int):
@@ -27,6 +29,11 @@ class ImageProcessor:
 
     def with_background(self, background: Background):
         self._background = background
+
+        return self
+
+    def with_shadow(self, shadow: int):
+        self._shadow = shadow
 
         return self
 
@@ -83,6 +90,18 @@ class ImageProcessor:
             self._copy_alpha_operator(),
             0,
             0,
+        )
+
+        shadow = self.source_img.clone() 
+        shadow.background_color = Color("black")
+        shadow.shadow(20, self._shadow, 0, 0)
+
+        image.composite_channel(
+            "default_channels",
+            shadow,
+            "over",
+            self._padding - 2 * self._shadow,
+            self._padding - self._shadow,
         )
 
         image.composite_channel(

@@ -98,7 +98,7 @@ class Preset(QWidget):
         self._border_radius_slider = QSlider(Qt.Horizontal)
         self._border_radius_slider.setMinimum(0)
         self._border_radius_slider.setMaximum(512)
-        self._border_radius_slider.setValue(self.model.preset.padding)
+        self._border_radius_slider.setValue(self.model.preset.border_radius)
         self._border_radius_slider.sliderReleased.connect(self._update_preset)
 
         backgroundLabel = QLabel("Background")
@@ -109,6 +109,15 @@ class Preset(QWidget):
         backgroundGridLayout.setContentsMargins(0, 0, 0, 0)
         backgroundGridLayout.setAlignment(Qt.AlignTop)
         backgroundGrid.setLayout(backgroundGridLayout)
+
+        backgroundLabel = QLabel("Shadow")
+        backgroundLabel.setStyleSheet("font-size: 16px;")
+
+        self._shadow_slider = QSlider(Qt.Horizontal)
+        self._shadow_slider.setMinimum(0)
+        self._shadow_slider.setMaximum(100)
+        self._shadow_slider.setValue(self.model.preset.shadow)
+        self._shadow_slider.sliderReleased.connect(self._update_preset)
 
         current_row = 0
         max_columns = 5
@@ -166,7 +175,7 @@ class Preset(QWidget):
                 PresetDTO(
                     padding=self._padding_slider.value(),
                     border_radius=self._border_radius_slider.value(),
-                    shadow=self.model.preset.shadow,
+                    shadow=self._shadow_slider.value(),
                     background=self._selected_background
                     or self.model.preset.background,
                 )
