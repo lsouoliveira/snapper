@@ -1,4 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QShortcut
 
 from .image_preview import ImagePreview
 from .preset import Preset 
@@ -18,6 +20,8 @@ class EditorWindow(QMainWindow):
         self.setMinimumSize(800, 600)
         self._setup_ui()
 
+        self._copyShortcut = QShortcut(QKeySequence("Ctrl+C"), self)
+        self._copyShortcut.activated.connect(self.copy_to_clipboard)
         self._update_image_preview(self._preset.model.preset)
 
     def _setup_ui(self):
@@ -44,8 +48,12 @@ class EditorWindow(QMainWindow):
         layout.addWidget(self._preset)
 
     def _handle_image_preview_double_clicked(self):
-        QApplication.clipboard().setPixmap(self._image_preview.image)
+        self.copy_to_clipboard()
         self.close()
+
+    def copy_to_clipboard(self):
+        QApplication.clipboard().setPixmap(self._image_preview.image)
+
 
     def _handle_preset_changed(self, preset):
         self._update_image_preview(preset)
