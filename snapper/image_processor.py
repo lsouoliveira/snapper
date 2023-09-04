@@ -140,12 +140,13 @@ class ImageProcessor:
                     left=0,
                     top=0,
                     width=shadow.width,
-                    height=shadow.height
+                    height=shadow.height,
+                    radius=self._border_radius if self._border_radius > 0 else None,
                 )
 
                 draw(shadow)
 
-                shadow.shadow(20, self._shadow, 0, 0)
+                shadow.shadow(40, self._shadow, 0, 0)
 
                 image.composite_channel(
                     "default_channels",
