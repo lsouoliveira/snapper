@@ -64,9 +64,7 @@ class ImageProcessor:
 
     @property
     def vertical_padding(self):
-        ratio = self.source_img.width / self.source_img.height
-
-        return int(self._padding / ratio)
+        return self._padding 
 
     def _draw_background(self, image):
         bg_image = self._generate_background_image()
@@ -85,9 +83,7 @@ class ImageProcessor:
 
     @property
     def image_height(self):
-        ratio = self.source_img.width / self.source_img.height
-
-        return self.source_img.height + int(2 * (self._padding / ratio)) + 2 * self._inset
+        return self.source_img.height + 2 * self._padding + 2 * self._inset
     
     def edge_color(self):
         width = self.source_img.width
