@@ -14,7 +14,7 @@ Install the dependencies:
 pip install -r requirements.txt
 ```
 
-Then execute:
+Then execute to install:
 
 ```bash
 pip install .
