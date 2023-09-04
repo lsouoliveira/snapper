@@ -143,8 +143,8 @@ class Preset(QWidget):
         backgroundGridLayout.setAlignment(Qt.AlignTop)
         backgroundGrid.setLayout(backgroundGridLayout)
 
-        backgroundLabel = QLabel("Shadow")
-        backgroundLabel.setStyleSheet("font-size: 16px;")
+        shadowLabel = QLabel("Shadow")
+        shadowLabel.setStyleSheet("font-size: 16px;")
 
         self._shadow_slider = QSlider(Qt.Horizontal)
         self._shadow_slider.setMinimum(0)
@@ -195,6 +195,8 @@ class Preset(QWidget):
         layout.addWidget(self._padding_slider)
         layout.addWidget(borderRadiusLabel)
         layout.addWidget(self._border_radius_slider)
+        layout.addWidget(shadowLabel)
+        layout.addWidget(self._shadow_slider)
         layout.addWidget(backgroundLabel)
         layout.addWidget(backgroundGrid)
 
