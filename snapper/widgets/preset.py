@@ -59,6 +59,39 @@ BACKGROUND_OPTIONS = [
         color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #3494e6, stop: 1 #ec6ead)",
     ),
     lambda: BackgroundOption(
+        background=GradientBackground.create(color="#67B26F", second_color="#4ca2cd"),
+        name="Mild",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #67B26F, stop: 1 #4ca2cd)",
+    ),
+    lambda: BackgroundOption(
+        background=GradientBackground.create(color="#f3904f", second_color="#3b4371"),
+        name="Dawn",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #f3904f, stop: 1 #3b4371)",
+    ),
+    lambda: BackgroundOption(
+        background=GradientBackground.create(color="#ee0979", second_color="#ff6a00"),
+        name="Ibiza Sunset",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #ee0979, stop: 1 #ff6a00)",
+    ),
+
+    lambda: BackgroundOption(
+        background=GradientBackground.create(color="#a770ef", second_color="#fdb99b"),
+        name="Radar",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #a770ef, stop: 1 #fdb99b)",
+    ),
+
+    lambda: BackgroundOption(
+        background=GradientBackground.create(color="#cb2d3e", second_color="#ef473a"),
+        name="Fire",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #cb2d3e, stop: 1 #ef473a)",
+    ),
+
+    lambda: BackgroundOption(
+        background=GradientBackground.create(color="#000428", second_color="#004e92"),
+        name="Frost",
+        color="qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #000428, stop: 1 #004e92)",
+    ),
+    lambda: BackgroundOption(
         background=Background.create(color="#00000000"),
         name="None",
         color="#d1d5db",
