@@ -29,23 +29,15 @@ class App(QApplication):
         if pixmap is None or pixmap.isNull():
             return
 
-        try:
-            self.editor_window = EditorWindow(pixmap)
-            self.editor_window.exited.connect(lambda: self.quit())
-            self.editor_window.showMaximized()
-        except Exception as e:
-            print(e)
-            self.quit()
+        self.editor_window = EditorWindow(pixmap)
+        self.editor_window.exited.connect(lambda: self.quit())
+        raise Exception("queijo")
 
     def _take_screenshot(self, region):
-        try:
-            return self.primaryScreen().grabWindow(
-                0,
-                region.x + self._screenshot_dialog.x(),
-                region.y + self._screenshot_dialog.y(),
-                region.width,
-                region.height,
-            )
-        except Exception as e:
-            print(e)
-            self.quit()
+        return self.primaryScreen().grabWindow(
+            0,
+            region.x + self._screenshot_dialog.x(),
+            region.y + self._screenshot_dialog.y(),
+            region.width,
+            region.height,
+        )
