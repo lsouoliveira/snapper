@@ -5,6 +5,12 @@
 
 A desktop app to take screenshots. A limited and very simple clone of [Xnapper](https://xnapper.com/).
 
+<p align="center">
+  
+  ![Captura de tela de 2024-02-07 09-04-31](https://github.com/lsouoliveira/snapper/assets/30642647/7c0aabdc-98e5-4486-861a-a3b835ee3e6b)
+  
+</p>
+
 ## Getting Started
 
 Install the dependencies:
